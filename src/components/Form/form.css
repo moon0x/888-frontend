@@ -1,0 +1,17 @@
+.form {
+    padding: 20px;
+    background: #202635;
+    color: #FFBB00;
+    border-radius: 10px;
+    /* border: 1px solid #abffff; */
+    margin-bottom: 20px;
+}
+
+h4 {
+    color: #f0f0f0ba;
+}
+
+.numberSpan {
+    color: #FFBB00;
+    font-size: 25px;
+}
