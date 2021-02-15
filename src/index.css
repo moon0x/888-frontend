@@ -5,13 +5,12 @@
 
 body {
   margin: 0;
-  font-family: VT323 !important;
+  font-family: 'Roboto', sans-serif !important;
   -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;  
-  background-color: #181C27 !important;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #181c27 !important;
   font-size: 20px !important;
 }
-
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -23,4 +22,3 @@ code {
     font-size: 16px !important;
   }
 }
-
