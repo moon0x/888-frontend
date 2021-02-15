@@ -107,7 +107,7 @@ function Lottery() {
               <Form title='CURRENT POOL'>
                 <span className='numberSpan'>
                   ${bnToDec(poolValue).toFixed(2)} (
-                  {bnToDec(lotteryAmount).toFixed(4)} YZY)
+                  {bnToDec(lotteryAmount).toFixed(4)} 888)
                 </span>
               </Form>
             </Col>
@@ -120,7 +120,7 @@ function Lottery() {
               <Form title='TOTAL PAID OUT'>
                 <span className='numberSpan'>
                   ${bnToDec(totalPaidOutValue).toFixed(2)} (
-                  {bnToDec(totalPaidOut).toFixed(4)} YZY)
+                  {bnToDec(totalPaidOut).toFixed(4)} 888)
                 </span>
               </Form>
             </Col>

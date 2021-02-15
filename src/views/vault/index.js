@@ -579,21 +579,21 @@ function Vault() {
             <Col xs={12} sm={4}>
               <Form title='TOTAL SUPPLY'>
                 <span className='numberSpan'>
-                  {bnDivdedByDecimals(totalSupply).toFormat(4)} YZY
+                  {bnDivdedByDecimals(totalSupply).toFormat(4)} 888
                 </span>
               </Form>
             </Col>
             <Col xs={12} sm={4}>
               <Form title='CIRCULATING SUPPLY'>
                 <span className='numberSpan'>
-                  {bnDivdedByDecimals(circulatingSupply).toFormat(4)} YZY
+                  {bnDivdedByDecimals(circulatingSupply).toFormat(4)} 888
                 </span>
               </Form>
             </Col>
             <Col xs={12} sm={4}>
-              <Form title='YOUR YZY BALANCE'>
+              <Form title='YOUR 888 BALANCE'>
                 <span className='numberSpan'>
-                  {bnDivdedByDecimals(userBalance).toFormat(4)} YZY
+                  {bnDivdedByDecimals(userBalance).toFormat(4)} 888
                 </span>
               </Form>
             </Col>
@@ -607,7 +607,7 @@ function Vault() {
               </Form>
             </Col>
             <Col xs={12} sm={4}>
-              <Form title='YZY PRICE'>
+              <Form title='888 PRICE'>
                 <span className='numberSpan'>
                   ${new BigNumber(yzyPrice).toFormat(2)}
                 </span>
