@@ -62,11 +62,11 @@ class App extends Component {
         }
         break
       case '3':
-        if (providerUrl.includes('ropsten')) {
-          this.props.setErrorRequest(false)
-        } else {
-          this.props.setErrorRequest(true)
-        }
+        // if (providerUrl.includes('ropsten')) {
+        //   this.props.setErrorRequest(false)
+        // } else {
+        //   this.props.setErrorRequest(true)
+        // }
         break
       default:
         this.props.setErrorRequest(true)
