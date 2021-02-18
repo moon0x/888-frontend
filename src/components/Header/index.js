@@ -63,10 +63,10 @@ function Header() {
       return
     }
     if (window.ethereum.networkVersion !== config.networkId) {
-      if (config.networkId === '1')
+      if (config.networkId === '56')
         NotificationManager.warning('Please select main net to proceed!')
-      else if (config.networkId === '3')
-        NotificationManager.warning('Please select ropsten net to proceed!')
+      else if (config.networkId === '97')
+        NotificationManager.warning('Please select test net to proceed!')
       return
     }
     if (window.ethereum.selectedAddress !== null) {
@@ -138,7 +138,9 @@ function Header() {
                 variant='outline-info'
                 onClick={(e) => {
                   window.open(
-                    `https://etherscan.io/address/${address}`,
+                    window.ethereum.networkVersion === '56'
+                    ? `https://bscscan.com/address/${address}`
+                    : `https://testnet.bscscan.com/address/${address}`,
                     '_blank'
                   )
                 }}
