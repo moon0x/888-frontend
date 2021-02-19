@@ -6,22 +6,20 @@ import { Provider } from 'react-redux';
 import { configureStore } from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import './fonts/VT323-Regular.ttf'
-import bsc, { UseWalletProvider } from 'use-wallet';
+import { UseWalletProvider } from 'use-wallet';
+import bsc from '@binance-chain/bsc-use-wallet'
 
 ReactDOM.render(
-  <Provider store={configureStore()}>
-    <UseWalletProvider
-      chainId={97}
-      connectors={{
-        // walletconnect: { rpcUrl: 'https://data-seed-prebsc-2-s1.binance.org:8545/' },
-        bsc,
-      }}
-    >
-      {/* <React.StrictMode> */}
+  <React.StrictMode>
+    <Provider store={configureStore()}>
+      <UseWalletProvider
+        chainId={97}
+        connectors={{ bsc }}
+      >
         <App />
-      {/* </React.StrictMode> */}
-    </UseWalletProvider>
-  </Provider>,
+      </UseWalletProvider>
+    </Provider>
+  </React.StrictMode>,
   document.getElementById('root')
 );
 

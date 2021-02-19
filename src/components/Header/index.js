@@ -14,21 +14,15 @@ import { useWallet } from 'use-wallet'
 
 function Header() {
   const wallet = useWallet()
+  console.log('wallet >>>', wallet);
+
   const dispatch = useDispatch()
   const address = useSelector((state) => state.authUser.address)
+  console.log(address)
   // const networkId = useSelector(state => state.authUser.networkId);
 
   // const onConnectClick = async () => {
   //   if (isMobile) {
-  //     // Check if connection is already established
-  //     if (!connector.connected) {
-  //       // create new session
-  //       connector.createSession()
-  //     } else {
-  //       console.log(connector._accounts[0])
-  //       console.log(connector._chainId.toString(10))
-  //     }
-
   //     // Subscribe to connection events
   //     connector.on('connect', (error, payload) => {
   //       if (error) {

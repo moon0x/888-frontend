@@ -1,3 +1,4 @@
+const { default: getRpcUrl } = require('./getRpcUrl');
 require('dotenv').config();
 
 // const web3Provider =
@@ -5,7 +6,7 @@ require('dotenv').config();
 //     ? process.env.REACT_APP_MAIN_WEB3_PROVIDER
 //     : process.env.REACT_APP_TEST_WEB3_PROVIDER;
 
-const web3Provider = 'https://data-seed-prebsc-2-s1.binance.org:8545/';
+const web3Provider = getRpcUrl();
 const config = {
   web3Provider: web3Provider,
   networkId: '97', //   process.env.REACT_APP_NETWORK_ID

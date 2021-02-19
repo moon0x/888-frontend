@@ -71,8 +71,6 @@ function Vault() {
   const address = useSelector((state) => state.authUser.address)
   const currentNetworkId = useSelector((state) => state.authUser.networkId)
 
-  console.log(address)
-
   BigNumber.config({
     DECIMAL_PLACES: 18,
     FORMAT: {
@@ -174,11 +172,6 @@ function Vault() {
 
       setTimerID(tempTimerID)
       fetchAllDataFromContract(true)
-
-      console.log(address)
-      console.log(totalSupply.toString())
-      console.log(circulatingSupply.toString())
-      console.log(tvl.toString())
     }
   }, [address])
 
