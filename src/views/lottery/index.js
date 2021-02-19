@@ -190,7 +190,7 @@ function Lottery() {
                     <br />
                     <span>
                       Please change your MetaMask to access the{' '}
-                      {networkId === '1' ? 'Main' : 'Ropsten'} Ethereum Network.
+                      {networkId === '56' ? 'Main' : 'Testnet'} Binance Smart Chain Testnet.
                     </span>
                   </Col>
                 </Row>

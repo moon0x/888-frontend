@@ -147,17 +147,17 @@ function Vault() {
       setTotalSupply(await getTotalSupply())
       setCirculatingSupply(await getCirculatingSupply())
       setTVL(await getTVL())
-      setYzyPrice(await getYZYPrice())
-      setMarketcap(await getMarketcap())
-      setTotalStakedAmount(await getTotalStakedAmount())
-      setUserBalance(await getBalance(address))
-      setUserTotalStakedAmount(await getUserTotalStakedAmount(address))
-      setUserETHBalance(await getETHBalance(address))
-      setUserSwapReward(await getSwapReward(address))
-      setUserYzyReward(await getYzyReward(address))
-      setIsEnalbledLock(await getIsEnalbledLock())
-      setStakedUserInfo(await getStakedUserInfo(address))
-      setApy(await getAPY())
+      // setYzyPrice(await getYZYPrice())
+      // setMarketcap(await getMarketcap())
+      // setTotalStakedAmount(await getTotalStakedAmount())
+      // setUserBalance(await getBalance(address))
+      // setUserTotalStakedAmount(await getUserTotalStakedAmount(address))
+      // setUserETHBalance(await getETHBalance(address))
+      // setUserSwapReward(await getSwapReward(address))
+      // setUserYzyReward(await getYzyReward(address))
+      // setIsEnalbledLock(await getIsEnalbledLock())
+      // setStakedUserInfo(await getStakedUserInfo(address))
+      // setApy(await getAPY())
     },
     [address]
   )
@@ -853,7 +853,7 @@ function Vault() {
                     <br />
                     <span>
                       Please change your MetaMask to access the{' '}
-                      {networkId === '1' ? 'Main' : 'Ropsten'} Ethereum Network.
+                      {networkId === '56' ? 'Main' : 'Testnet'} Binance Smart Chain Testnet.
                     </span>
                   </Col>
                 </Row>
