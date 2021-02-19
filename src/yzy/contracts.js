@@ -14,14 +14,16 @@ const networkId = config.networkId;
 console.log(networkId);
 const yzyContractAddress = config.contractAddress.yzy[networkId];
 const IyzyContract = new web3.eth.Contract(yzyContractAbi, yzyContractAddress);
+console.log('yzyContractAddress >>>', yzyContractAddress);
+console.log('IyzyContract >>> ', IyzyContract);
 
 const vaultContractAddress = config.contractAddress.vault[networkId];
 const IVaultContract = new web3.eth.Contract(
   vaultContractAbi,
   vaultContractAddress
 );
-console.log(vaultContractAddress);
-console.log(IVaultContract);
+console.log('vaultContractAddress >>>', vaultContractAddress);
+console.log('IVaultContract >>>', IVaultContract);
 
 const yzyETHPairContractAddress = config.contractAddress.yzyETHPair[networkId];
 const IyzyETHPairContract = new web3.eth.Contract(

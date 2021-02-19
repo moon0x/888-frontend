@@ -54,19 +54,19 @@ class App extends Component {
   handleNetworkChanged = (networkId) => {
     this.props.setNetworkIdRequest(networkId);
     switch (networkId) {
-      case '1':
-        if (providerUrl.includes('mainnet')) {
+      case '56':
+        if (providerUrl === 'https://bsc-dataseed1.defibit.io/') {
           this.props.setErrorRequest(false);
         } else {
           this.props.setErrorRequest(true);
         }
         break;
-      case '3':
-        // if (providerUrl.includes('ropsten')) {
-        //   this.props.setErrorRequest(false)
-        // } else {
-        //   this.props.setErrorRequest(true)
-        // }
+        case '97':
+        if (providerUrl === 'https://data-seed-prebsc-2-s1.binance.org:8545/') {
+          this.props.setErrorRequest(false)
+        } else {
+          this.props.setErrorRequest(true)
+        }
         break;
       default:
         this.props.setErrorRequest(true);

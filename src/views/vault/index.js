@@ -71,6 +71,8 @@ function Vault() {
   const address = useSelector((state) => state.authUser.address)
   const currentNetworkId = useSelector((state) => state.authUser.networkId)
 
+  console.log(address)
+
   BigNumber.config({
     DECIMAL_PLACES: 18,
     FORMAT: {
@@ -147,17 +149,17 @@ function Vault() {
       setTotalSupply(await getTotalSupply())
       setCirculatingSupply(await getCirculatingSupply())
       setTVL(await getTVL())
-      setYzyPrice(await getYZYPrice())
-      setMarketcap(await getMarketcap())
-      setTotalStakedAmount(await getTotalStakedAmount())
-      setUserBalance(await getBalance(address))
-      setUserTotalStakedAmount(await getUserTotalStakedAmount(address))
-      setUserETHBalance(await getETHBalance(address))
-      setUserSwapReward(await getSwapReward(address))
-      setUserYzyReward(await getYzyReward(address))
-      setIsEnalbledLock(await getIsEnalbledLock())
-      setStakedUserInfo(await getStakedUserInfo(address))
-      setApy(await getAPY())
+      // setYzyPrice(await getYZYPrice())
+      // setMarketcap(await getMarketcap())
+      // setTotalStakedAmount(await getTotalStakedAmount())
+      // setUserBalance(await getBalance(address))
+      // setUserTotalStakedAmount(await getUserTotalStakedAmount(address))
+      // setUserETHBalance(await getETHBalance(address))
+      // setUserSwapReward(await getSwapReward(address))
+      // setUserYzyReward(await getYzyReward(address))
+      // setIsEnalbledLock(await getIsEnalbledLock())
+      // setStakedUserInfo(await getStakedUserInfo(address))
+      // setApy(await getAPY())
     },
     [address]
   )
@@ -172,6 +174,11 @@ function Vault() {
 
       setTimerID(tempTimerID)
       fetchAllDataFromContract(true)
+
+      console.log(address)
+      console.log(totalSupply.toString())
+      console.log(circulatingSupply.toString())
+      console.log(tvl.toString())
     }
   }, [address])
 
