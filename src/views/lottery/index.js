@@ -58,7 +58,7 @@ function Lottery() {
       set$888Price(await get$888Price())
       setWinners(await getWinners())
       setLotteryAmount(await getCollectedLotteryAmount())
-      setWinnersInfo(await getWinnersInfo())
+      // setWinnersInfo(await getWinnersInfo())
       setTotalPaidOut(await getLotteryTotalPaidOut())
       setLotteryFee(await getLotteryFee())
       setLotteryLimit(await getLotteryLimit())
@@ -138,7 +138,7 @@ function Lottery() {
                         <p style={{ color: '#010A35' }}>ADDRESS</p>
                       </Col>
                     </Row>
-                    {winnersInfo.map((element, index) => (
+                    {winnersInfo?.map((element, index) => (
                       <Row className=''>
                         <Col xl={12}>{element.address}</Col>
                       </Row>
@@ -150,7 +150,7 @@ function Lottery() {
                         <p style={{ color: '#010A35' }}>TRANSACTION TIME</p>
                       </Col>
                     </Row>
-                    {winnersInfo.map((element, index) => (
+                    {winnersInfo?.map((element, index) => (
                       <Row>
                         <Col xl={12}>{element.timestamp}</Col>
                       </Row>
@@ -162,7 +162,7 @@ function Lottery() {
                         <p style={{ color: '#010A35' }}>PRIZE </p>
                       </Col>
                     </Row>
-                    {winnersInfo.map((element, index) => (
+                    {winnersInfo?.map((element, index) => (
                       <Row>
                         <Col xl={12}>
                           {bnToDec(element.amount).toFixed(4)} $888 ($
