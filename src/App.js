@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { NotificationContainer } from 'react-notifications';
 import { isMobile } from 'react-device-detect';
@@ -7,11 +7,11 @@ import { setAddress, setNetworkId, setError } from './redux/actions';
 import Layout from './layout';
 import Vault from './views/vault';
 import Lottery from './views/lottery';
-import { providerUrl, Web3 } from './yzy/web3';
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import { Web3 } from './$888/web3';
 import { useWallet } from 'use-wallet';
 import bsc from '@binance-chain/bsc-use-wallet'
+import './App.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App({ setAddressRequest, setNetworkIdRequest, setErrorRequest }) {
@@ -65,19 +65,19 @@ function App({ setAddressRequest, setNetworkIdRequest, setErrorRequest }) {
     setNetworkIdRequest(networkId);
     switch (networkId) {
       case '56':
-        if (providerUrl === 'https://bsc-dataseed1.defibit.io/') {
+        if (!wallet.error) {
           setErrorRequest(false);
         } else {
           setErrorRequest(true);
         }
         break;
       case '97':
-      if (providerUrl === 'https://data-seed-prebsc-2-s1.binance.org:8545/') {
-        setErrorRequest(false)
-      } else {
-        setErrorRequest(true)
-      }
-      break;
+        if (!wallet.error) {
+          setErrorRequest(false);
+        } else {
+          setErrorRequest(true);
+        }
+        break;
       default:
         setErrorRequest(true);
     }
