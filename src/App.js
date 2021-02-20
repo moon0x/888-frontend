@@ -55,11 +55,11 @@ class App extends Component {
     this.props.setNetworkIdRequest(networkId)
     switch (networkId) {
       case '1':
-        if (providerUrl.includes('mainnet')) {
-          this.props.setErrorRequest(false)
-        } else {
-          this.props.setErrorRequest(true)
-        }
+        // if (providerUrl.includes('mainnet')) {
+        //   this.props.setErrorRequest(false)
+        // } else {
+        //   this.props.setErrorRequest(true)
+        // }
         break
       case '3':
         // if (providerUrl.includes('ropsten')) {
