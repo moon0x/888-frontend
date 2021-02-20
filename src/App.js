@@ -64,6 +64,20 @@ function App({ setAddressRequest, setNetworkIdRequest, setErrorRequest }) {
   const handleNetworkChanged = (networkId) => {
     setNetworkIdRequest(networkId);
     switch (networkId) {
+      case '1':
+        // if (providerUrl.includes('mainnet')) {
+        //   this.props.setErrorRequest(false)
+        // } else {
+        //   this.props.setErrorRequest(true)
+        // }
+        break
+      case '3':
+        // if (providerUrl.includes('ropsten')) {
+        //   this.props.setErrorRequest(false)
+        // } else {
+        //   this.props.setErrorRequest(true)
+        // }
+        break
       case '56':
         if (!wallet.error) {
           setErrorRequest(false);
