@@ -58,7 +58,7 @@ function Lottery() {
       set$888Price(await get$888Price())
       setWinners(await getWinners())
       setLotteryAmount(await getCollectedLotteryAmount())
-      // setWinnersInfo(await getWinnersInfo())
+      setWinnersInfo(await getWinnersInfo())
       setTotalPaidOut(await getLotteryTotalPaidOut())
       setLotteryFee(await getLotteryFee())
       setLotteryLimit(await getLotteryLimit())
