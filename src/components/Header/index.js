@@ -38,7 +38,7 @@ function Header() {
   return (
     <Navbar vbar="true" collapseOnSelect expand='lg'>
       <Navbar.Brand href='/'>
-        <img src={logo} className='logo' alt='YZY Logo' />
+        <img src={logo} className='logo' alt='$888 Logo' />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='responsive-navbar-nav' />
       <Navbar.Collapse id='responsive-navbar-nav'>
@@ -67,7 +67,7 @@ function Header() {
           </Nav.Link>
           <Nav.Link
             className='menu-item'
-            href='https://yzydao.medium.com/introducing-yzy-dao-yzy-6c973279dad5'
+            href='https://$888dao.medium.com/introducing-$888-dao-$888-6c973279dad5'
             activestyle={{ color: '#EE2529' }}
             target='_blank'
             rel='noreferrer'

@@ -1,8 +1,8 @@
 import BigNumber from 'bignumber.js';
 import { vaultContract } from './contracts';
 import { callMethod, bnDivdedByDecimals, secondToDate, bnToDec } from './utils';
-import { getLPBalance, getLPTotalSupply, getLPTVL } from './univ2pair';
-import { getYZYPrice } from '../subgraphs/api';
+import { getLPBalance, getLPTotalSupply, getLPTVL } from './pancakev2pair';
+import { get$888Price } from '../subgraphs/api';
 
 import { web3 } from './web3';
 
@@ -22,8 +22,8 @@ export const getSwapReward = async (address) => {
     return { pending: new BigNumber(result.pending), available: new BigNumber(result.available) };
 }
 
-export const getYzyReward = async (address) => {
-    const result = await callMethod(vaultContract.contract.methods['getYzyReward'], [address]);
+export const get$888Reward = async (address) => {
+    const result = await callMethod(vaultContract.contract.methods['get$888Reward'], [address]);
     return { pending: new BigNumber(result.pending), available: new BigNumber(result.available) };
 }
 
@@ -61,11 +61,11 @@ export const getStakedUserInfo = async (address) => {
     return { ...result, isLocked: isLocked, endOfLock: endOfLock, stakedAmount: new BigNumber(result.stakedAmount) };
 }
 
-export const getRestTimeForYzyRewards = async (address) => {
+export const getRestTimeFor$888Rewards = async (address) => {
     const result = await callMethod(vaultContract.contract.methods['_stakers'], [address]);
-    const blockCountFor2weeks = new BigNumber(await callMethod(vaultContract.contract.methods['_claimPeriodForYzyReward'], []));
+    const blockCountFor2weeks = new BigNumber(await callMethod(vaultContract.contract.methods['_claimPeriodFor$888Reward'], []));
     const currentBlockNumber = new BigNumber(await web3.eth.getBlockNumber());
-    const restTime = new BigNumber(13.3).times(blockCountFor2weeks.minus(currentBlockNumber.minus(result.lastClimedBlockForYzyReward)));
+    const restTime = new BigNumber(13.3).times(blockCountFor2weeks.minus(currentBlockNumber.minus(result.lastClimedBlockFor$888Reward)));
     return secondToDate(restTime.toNumber());
 }
 
@@ -102,18 +102,18 @@ export const getVaultGovernance = async () => {
     return result;
 }
 
-export const getAllocPointForWETH = async () => {
-    const result = await callMethod(vaultContract.contract.methods['_allocPointForWETH'], []);
+export const getAllocPointForWBNB = async () => {
+    const result = await callMethod(vaultContract.contract.methods['_allocPointForWBNB'], []);
     return new BigNumber(result).div(new BigNumber(10000));
 }
 
-export const getAllocPointForWBTC = async () => {
-    const result = await callMethod(vaultContract.contract.methods['_allocPointForWBTC'], []);
+export const getAllocPointForBTCB = async () => {
+    const result = await callMethod(vaultContract.contract.methods['_allocPointForBTCB'], []);
     return new BigNumber(result).div(new BigNumber(10000));
 }
 
-export const getAllocPointForYFI = async () => {
-    const result = await callMethod(vaultContract.contract.methods['_allocPointForYFI'], []);
+export const getAllocPointForBIFI = async () => {
+    const result = await callMethod(vaultContract.contract.methods['_allocPointForBIFI'], []);
     return new BigNumber(result).div(new BigNumber(10000));
 }
 
@@ -176,7 +176,7 @@ export const getAPY = async () => {
     const stakedLpAmount = await getLPBalance(vaultContract.address);
     const LPTotalSupply = await getLPTotalSupply();
     const LPTVL = await getLPTVL();
-    const yzyPrice = await getYZYPrice();
+    const $888Price = await get$888Price();
 
     if (LPTotalSupply.eq(new BigNumber(0))) {
         return 0;
@@ -187,8 +187,8 @@ export const getAPY = async () => {
         return 0;
     }
 
-    const yzyPerBlock = new BigNumber(await callMethod(vaultContract.contract.methods['getYzyPerBlockForYzyReward'],[]));
+    const $888PerBlock = new BigNumber(await callMethod(vaultContract.contract.methods['get$888PerBlockFor$888Reward'],[]));
     const blockCountForYear = new BigNumber(2372500);
     
-    return (1 + bnToDec(yzyPerBlock.times(blockCountForYear).div(poolTvl)) * yzyPrice) * 100;
+    return (1 + bnToDec($888PerBlock.times(blockCountForYear).div(poolTvl)) * $888Price) * 100;
 }

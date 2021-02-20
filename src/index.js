@@ -13,7 +13,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Provider store={configureStore()}>
       <UseWalletProvider
-        chainId={97}
+        chainId={56}
         connectors={{ bsc }}
       >
         <App />

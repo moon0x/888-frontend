@@ -7,7 +7,7 @@ import { setAddress, setNetworkId, setError } from './redux/actions';
 import Layout from './layout';
 import Vault from './views/vault';
 import Lottery from './views/lottery';
-import { Web3 } from './yzy/web3';
+import { Web3 } from './$888/web3';
 import { useWallet } from 'use-wallet';
 import bsc from '@binance-chain/bsc-use-wallet'
 import './App.css';

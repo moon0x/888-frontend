@@ -2,8 +2,8 @@
 import React, { useCallback, useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import BigNumber from 'bignumber.js'
-import { getYZYPrice } from '../../subgraphs/api'
-import { networkId } from '../../yzy/contracts'
+import { get$888Price } from '../../subgraphs/api'
+import { networkId } from '../../$888/contracts'
 import {
   getWinners,
   getWinnersInfo,
@@ -11,8 +11,8 @@ import {
   getLotteryTotalPaidOut,
   getLotteryFee,
   getLotteryLimit,
-} from '../../yzy/vault'
-import { bnToDec } from '../../yzy/utils'
+} from '../../$888/vault'
+import { bnToDec } from '../../$888/utils'
 import { Row, Col } from 'react-bootstrap'
 import PageHeader from '../../components/PageHeader'
 import Form from '../../components/Form'
@@ -41,7 +41,7 @@ function Lottery() {
     },
   })
 
-  const [yzyPrice, setYzyPrice] = useState(0)
+  const [$888Price, set$888Price] = useState(0)
   const [winners, setWinners] = useState(0)
   const [lotteryAmount, setLotteryAmount] = useState(new BigNumber(0))
   const [winnersInfo, setWinnersInfo] = useState([])
@@ -55,7 +55,7 @@ function Lottery() {
 
   const fetchAllDataFromContract = useCallback(
     async (firstFlag = false, transactionType = '') => {
-      setYzyPrice(await getYZYPrice())
+      set$888Price(await get$888Price())
       setWinners(await getWinners())
       setLotteryAmount(await getCollectedLotteryAmount())
       setWinnersInfo(await getWinnersInfo())
@@ -80,9 +80,9 @@ function Lottery() {
   }, [address])
 
   useEffect(() => {
-    setPoolValue(new BigNumber(yzyPrice).times(lotteryAmount))
-    setTotalPaidOutValue(new BigNumber(yzyPrice).times(totalPaidOut))
-  }, [yzyPrice, lotteryAmount, totalPaidOut])
+    setPoolValue(new BigNumber($888Price).times(lotteryAmount))
+    setTotalPaidOutValue(new BigNumber($888Price).times(totalPaidOut))
+  }, [$888Price, lotteryAmount, totalPaidOut])
 
   return (
     <Page>
@@ -165,9 +165,9 @@ function Lottery() {
                     {winnersInfo.map((element, index) => (
                       <Row>
                         <Col xl={12}>
-                          {bnToDec(element.amount).toFixed(4)} YZY ($
+                          {bnToDec(element.amount).toFixed(4)} $888 ($
                           {bnToDec(
-                            new BigNumber(yzyPrice).times(element.amount)
+                            new BigNumber($888Price).times(element.amount)
                           ).toFixed(2)}
                           )
                         </Col>

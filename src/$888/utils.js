@@ -5,13 +5,13 @@ const createEthAccount = () => {
   return web3.eth.accounts.create();
 };
 
-const getETHBalance = async (address) => {
+const getBNBBalance = async (address) => {
   const ethBalance = await web3.eth.getBalance(address);
   return bnDivdedByDecimals(new BigNumber(ethBalance));
 }
 
-const checkETHBalance = async (address, threshold = 0) => {
-  const balance = await getETHBalance(address);
+const checkBNBBalance = async (address, threshold = 0) => {
+  const balance = await getBNBBalance(address);
   if (balance.lte(new BigNumber(threshold))) {
     throw new Error('Insufficient balance');
   }
@@ -164,8 +164,8 @@ const secondToDate = (seconds) => {
 
 export {
   createEthAccount,
-  getETHBalance,
-  checkETHBalance,
+  getBNBBalance,
+  checkBNBBalance,
   callMethod,
   sendTransaction,
   mobileSendTransaction,
