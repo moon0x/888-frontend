@@ -2,10 +2,7 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Nav, Navbar, Button } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-import config from '../../config'
 import { NotificationManager } from 'react-notifications'
-import { isMobile } from 'react-device-detect'
-import { connector } from '../../yzy/web3'
 import { setAddress, setNetworkId } from '../../redux/actions'
 
 import logo from '../../images/logo.svg'
@@ -21,65 +18,16 @@ function Header() {
   console.log(address)
   // const networkId = useSelector(state => state.authUser.networkId);
 
-  // const onConnectClick = async () => {
-  //   if (isMobile) {
-  //     // Subscribe to connection events
-  //     connector.on('connect', (error, payload) => {
-  //       if (error) {
-  //         throw error
-  //       }
-
-  //       // Get provided accounts and chainId
-  //       const { accounts, chainId } = payload.params[0]
-  //       dispatch(setAddress(accounts[0]))
-  //       dispatch(setNetworkId(chainId.toString(10)))
-  //     })
-
-  //     connector.on('session_update', (error, payload) => {
-  //       if (error) {
-  //         throw error
-  //       }
-
-  //       // Get updated accounts and chainId
-  //       // const { accounts, chainId } = payload.params[0];
-  //     })
-
-  //     connector.on('disconnect', (error, payload) => {
-  //       if (error) {
-  //         throw error
-  //       }
-
-  //       // Delete connector
-  //     })
-
-  //     return
-  //   }
-  //   if (typeof window.ethereum === 'undefined') {
-  //     NotificationManager.warning('Please install MetaMask!')
-  //     return
-  //   }
-  //   if (window.ethereum.networkVersion !== config.networkId) {
-  //     if (config.networkId === '56')
-  //       NotificationManager.warning('Please select main net to proceed!')
-  //     else if (config.networkId === '97')
-  //       NotificationManager.warning('Please select test net to proceed!')
-  //     return
-  //   }
-  //   if (window.ethereum.selectedAddress !== null) {
-  //     NotificationManager.warning('MetaMask was already connected.')
-  //     return
-  //   }
-  //   if (window.ethereum.selectedAddress === null) {
-  //     try {
-  //       await window.ethereum.request({ method: 'eth_requestAccounts' })
-  //     } catch (err) {
-  //       //console.log('err :>> ', err);
-  //     }
-  //   }
-  // }
-
   const onConnectClick = async () => {
-    wallet.connect();
+    if (wallet.status === 'disconnected') {
+      wallet.connect();
+    } else if (wallet.status === 'connected') {
+      dispatch(setAddress(wallet.account))
+      dispatch(setNetworkId(wallet.chainId.toString(10)))
+    } else if (wallet.status === 'error') {
+      NotificationManager.warning('Please install MetaMask!')
+      return
+    }
 
     console.log(wallet.account);
     console.log(wallet.chainId);
@@ -114,7 +62,6 @@ function Header() {
             className='menu-item'
             onClick={() => alert('Coming soon!')}
             activestyle={{ color: '#EE2529' }}
-            target='_blank'
           >
             VOTE
           </Nav.Link>
