@@ -23,7 +23,7 @@ export const getSwapReward = async (address) => {
 }
 
 export const get$888Reward = async (address) => {
-    const result = await callMethod(vaultContract.contract.methods['get$888Reward'], [address]);
+    const result = await callMethod(vaultContract.contract.methods['get888Reward'], [address]);
     return { pending: new BigNumber(result.pending), available: new BigNumber(result.available) };
 }
 
@@ -187,7 +187,7 @@ export const getAPY = async () => {
         return 0;
     }
 
-    const $888PerBlock = new BigNumber(await callMethod(vaultContract.contract.methods['get$888PerBlockFor$888Reward'],[]));
+    const $888PerBlock = new BigNumber(await callMethod(vaultContract.contract.methods['get888PerBlockFor888Reward'],[]));
     const blockCountForYear = new BigNumber(2372500);
     
     return (1 + bnToDec($888PerBlock.times(blockCountForYear).div(poolTvl)) * $888Price) * 100;
