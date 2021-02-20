@@ -2,90 +2,43 @@ import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { Nav, Navbar, Button } from 'react-bootstrap'
 import { NavLink } from 'react-router-dom'
-import config from '../../config'
 import { NotificationManager } from 'react-notifications'
-import { isMobile } from 'react-device-detect'
-import { connector } from '../../yzy/web3'
 import { setAddress, setNetworkId } from '../../redux/actions'
 
 import logo from '../../images/logo.svg'
 import './header.css'
+import { useWallet } from 'use-wallet'
 
 function Header() {
+  const wallet = useWallet()
+  console.log('wallet >>>', wallet);
+
   const dispatch = useDispatch()
   const address = useSelector((state) => state.authUser.address)
+  console.log(address)
   // const networkId = useSelector(state => state.authUser.networkId);
 
   const onConnectClick = async () => {
-    if (isMobile) {
-      // Check if connection is already established
-      if (!connector.connected) {
-        // create new session
-        connector.createSession()
-      } else {
-        console.log(connector._accounts[0])
-        console.log(connector._chainId.toString(10))
-      }
-
-      // Subscribe to connection events
-      connector.on('connect', (error, payload) => {
-        if (error) {
-          throw error
-        }
-
-        // Get provided accounts and chainId
-        const { accounts, chainId } = payload.params[0]
-        dispatch(setAddress(accounts[0]))
-        dispatch(setNetworkId(chainId.toString(10)))
-      })
-
-      connector.on('session_update', (error, payload) => {
-        if (error) {
-          throw error
-        }
-
-        // Get updated accounts and chainId
-        // const { accounts, chainId } = payload.params[0];
-      })
-
-      connector.on('disconnect', (error, payload) => {
-        if (error) {
-          throw error
-        }
-
-        // Delete connector
-      })
-
-      return
-    }
-    if (typeof window.ethereum === 'undefined') {
+    if (wallet.status === 'disconnected') {
+      wallet.connect();
+    } else if (wallet.status === 'connected') {
+      dispatch(setAddress(wallet.account))
+      dispatch(setNetworkId(wallet.chainId.toString(10)))
+    } else if (wallet.status === 'error') {
       NotificationManager.warning('Please install MetaMask!')
       return
     }
-    if (window.ethereum.networkVersion !== config.networkId) {
-      if (config.networkId === '1')
-        NotificationManager.warning('Please select main net to proceed!')
-      else if (config.networkId === '3')
-        NotificationManager.warning('Please select ropsten net to proceed!')
-      return
-    }
-    if (window.ethereum.selectedAddress !== null) {
-      NotificationManager.warning('MetaMask was already connected.')
-      return
-    }
-    if (window.ethereum.selectedAddress === null) {
-      try {
-        await window.ethereum.request({ method: 'eth_requestAccounts' })
-      } catch (err) {
-        //console.log('err :>> ', err);
-      }
-    }
+
+    console.log(wallet.account);
+    console.log(wallet.chainId);
+    console.log(wallet.ethereum);
+    console.log(wallet.status);
   }
 
   return (
-    <Navbar vbar collapseOnSelect expand='lg'>
+    <Navbar vbar="true" collapseOnSelect expand='lg'>
       <Navbar.Brand href='/'>
-        <img src={logo} className='logo' alt='YZY Logo' />
+        <img src={logo} className='logo' alt='$888 Logo' />
       </Navbar.Brand>
       <Navbar.Toggle aria-controls='responsive-navbar-nav' />
       <Navbar.Collapse id='responsive-navbar-nav'>
@@ -93,30 +46,29 @@ function Header() {
           <NavLink
             className='menu-item'
             to='/vault'
-            activeStyle={{ color: '#EE2529' }}
+            activestyle={{ color: '#EE2529' }}
           >
             VAULT
           </NavLink>
           <NavLink
             className='menu-item'
             to='/lottery'
-            activeStyle={{ color: '#EE2529' }}
+            activestyle={{ color: '#EE2529' }}
             rel='noreferrer'
           >
             LOTTERY
           </NavLink>
           <Nav.Link
             className='menu-item'
-            href='https://snapshot.page/#/yzydao.eth'
-            activeStyle={{ color: '#EE2529' }}
-            target='_blank'
+            onClick={() => alert('Coming soon!')}
+            activestyle={{ color: '#EE2529' }}
           >
             VOTE
           </Nav.Link>
           <Nav.Link
             className='menu-item'
-            href='https://yzydao.medium.com/introducing-yzy-dao-yzy-6c973279dad5'
-            activeStyle={{ color: '#EE2529' }}
+            href='https://$888dao.medium.com/introducing-$888-dao-$888-6c973279dad5'
+            activestyle={{ color: '#EE2529' }}
             target='_blank'
             rel='noreferrer'
           >
@@ -138,7 +90,9 @@ function Header() {
                 variant='outline-info'
                 onClick={(e) => {
                   window.open(
-                    `https://etherscan.io/address/${address}`,
+                    window.ethereum.networkVersion === '56'
+                    ? `https://bscscan.com/address/${address}`
+                    : `https://testnet.bscscan.com/address/${address}`,
                     '_blank'
                   )
                 }}

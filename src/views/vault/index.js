@@ -5,41 +5,41 @@ import BigNumber from 'bignumber.js'
 import {
   bnMultipledByDecimals,
   bnDivdedByDecimals,
-  getETHBalance,
+  getBNBBalance,
   bnToDec,
-} from '../../yzy/utils'
+} from '../../$888/utils'
 import {
   getCirculatingSupply,
   getTotalSupply,
   getBalance,
-} from '../../yzy/token'
+} from '../../$888/token'
 import {
   getTotalStakedAmount,
   getUserTotalStakedAmount,
   getMinimumDepositAmount,
   getSwapReward,
-  getYzyReward,
-  getAllocPointForWETH,
-  getAllocPointForWBTC,
-  getAllocPointForYFI,
+  get$888Reward,
+  getAllocPointForWBNB,
+  getAllocPointForBTCB,
+  getAllocPointForBIFI,
   getTVL,
-  getRestTimeForYzyRewards,
+  getRestTimeFor$888Rewards,
   getRestTimeForSwapRewards,
   getIsEnalbledLock,
   getStakedUserInfo,
   getAPY,
   getBurnFee,
   getEarlyUnstakeFee,
-} from '../../yzy/vault'
-import { getYZYPrice, getMarketcap } from '../../subgraphs/api'
+} from '../../$888/vault'
+import { get$888Price, getMarketcap } from '../../subgraphs/api'
 import {
   networkId,
   vaultContract,
-  yzyETHPairContract,
-  yfiETHPairContract,
-  wbtcETHPairContract,
-} from '../../yzy/contracts'
-import { getAmountOut } from '../../yzy/univ2pair'
+  $888BNBPairContract,
+  bifiBNBPairContract,
+  btcbBNBPairContract,
+} from '../../$888/contracts'
+import { getAmountOut } from '../../$888/pancakev2pair'
 import { Row, Col } from 'react-bootstrap'
 import { NotificationManager } from 'react-notifications'
 import Page from '../../components/Page'
@@ -52,7 +52,7 @@ import ConfirmModal from '../../components/ConfirmModal'
 import 'react-notifications/lib/notifications.css'
 import { css } from '@emotion/core'
 import ClockLoader from 'react-spinners/ClockLoader'
-import { sendTransaction, mobileSendTransaction } from '../../yzy/utils'
+import { sendTransaction, mobileSendTransaction } from '../../$888/utils'
 import { isMobile } from 'react-device-detect'
 import './index.css'
 
@@ -97,7 +97,7 @@ function Vault() {
   const [circulatingSupply, setCirculatingSupply] = useState(new BigNumber(0))
   const [tvl, setTVL] = useState(new BigNumber(0))
 
-  const [yzyPrice, setYzyPrice] = useState(0)
+  const [$888Price, set$888Price] = useState(0)
   const [marketcap, setMarketcap] = useState(0)
   const [totalStakedAmount, setTotalStakedAmount] = useState(new BigNumber(0))
   const [userBalance, setUserBalance] = useState(new BigNumber(0))
@@ -105,28 +105,28 @@ function Vault() {
     new BigNumber(0)
   )
   const [minDepositAmount, setMinDepositAmount] = useState(new BigNumber(0))
-  const [userETHBalance, setUserETHBalance] = useState(new BigNumber(0))
+  const [userBNBBalance, setUserBNBBalance] = useState(new BigNumber(0))
   const [userSwapReward, setUserSwapReward] = useState({})
-  const [userYzyReward, setUserYzyReward] = useState({})
+  const [user$888Reward, setUser$888Reward] = useState({})
   const [isEnabledLock, setIsEnalbledLock] = useState(true)
   const [stakedUserInfo, setStakedUserInfo] = useState({})
 
-  const [userWethAvailableReward, setUserWethAvailableReward] = useState(
+  const [userWbnbAvailableReward, setUserWbnbAvailableReward] = useState(
     new BigNumber(0)
   )
-  const [userWbtcAvailableReward, setUserWbtcAvailableReward] = useState(
+  const [userBtcbAvailableReward, setUserBtcbAvailableReward] = useState(
     new BigNumber(0)
   )
-  const [userYfiAvailableReward, setUserYfiAvailableReward] = useState(
+  const [userBifiAvailableReward, setUserBifiAvailableReward] = useState(
     new BigNumber(0)
   )
 
-  const [userWethPendingReward, setUserWethPendingReward] = useState(0)
-  const [userWbtcPendingReward, setUserWbtcPendingReward] = useState(0)
-  const [userYfiPendingReward, setUserYfiPendingReward] = useState(0)
+  const [userWbnbPendingReward, setUserWbnbPendingReward] = useState(0)
+  const [userBtcbPendingReward, setUserBtcbPendingReward] = useState(0)
+  const [userBifiPendingReward, setUserBifiPendingReward] = useState(0)
 
-  const [pendingYZYValue, setPendingYZYValue] = useState(new BigNumber(0))
-  const [availableYZYValue, setAvailableYZYValue] = useState(new BigNumber(0))
+  const [pending$888Value, setPending$888Value] = useState(new BigNumber(0))
+  const [available$888Value, setAvailable$888Value] = useState(new BigNumber(0))
 
   const [timerID, setTimerID] = useState(0)
   const [showConfirmModal, setShowConfirmModal] = useState(false)
@@ -147,14 +147,14 @@ function Vault() {
       setTotalSupply(await getTotalSupply())
       setCirculatingSupply(await getCirculatingSupply())
       setTVL(await getTVL())
-      setYzyPrice(await getYZYPrice())
+      set$888Price(await get$888Price())
       setMarketcap(await getMarketcap())
       setTotalStakedAmount(await getTotalStakedAmount())
       setUserBalance(await getBalance(address))
       setUserTotalStakedAmount(await getUserTotalStakedAmount(address))
-      setUserETHBalance(await getETHBalance(address))
+      setUserBNBBalance(await getBNBBalance(address))
       setUserSwapReward(await getSwapReward(address))
-      setUserYzyReward(await getYzyReward(address))
+      setUser$888Reward(await get$888Reward(address))
       setIsEnalbledLock(await getIsEnalbledLock())
       setStakedUserInfo(await getStakedUserInfo(address))
       setApy(await getAPY())
@@ -176,79 +176,79 @@ function Vault() {
   }, [address])
 
   useEffect(() => {
-    const bnYZYPrice = new BigNumber(yzyPrice)
-    setPendingYZYValue(bnYZYPrice.times(userYzyReward.pending))
-    setAvailableYZYValue(bnYZYPrice.times(userYzyReward.available))
-  }, [userYzyReward, yzyPrice])
+    const bn$888Price = new BigNumber($888Price)
+    setPending$888Value(bn$888Price.times(user$888Reward.pending))
+    setAvailable$888Value(bn$888Price.times(user$888Reward.available))
+  }, [user$888Reward, $888Price])
 
   useEffect(async () => {
     if (
       userSwapReward.pending &&
       userSwapReward.pending.isGreaterThan(new BigNumber(0))
     ) {
-      const wethEstimateAmount = await getAmountOut(
-        yzyETHPairContract,
+      const wbnbEstimateAmount = await getAmountOut(
+        $888BNBPairContract,
         bnToDec(userSwapReward.pending),
         true
       )
-      const wethRewardAmount = new BigNumber(wethEstimateAmount).times(
-        await getAllocPointForWETH()
+      const wbnbRewardAmount = new BigNumber(wbnbEstimateAmount).times(
+        await getAllocPointForWBNB()
       )
-      const wbtcRewardAmount = new BigNumber(wethEstimateAmount).times(
-        await getAllocPointForWBTC()
+      const btcbRewardAmount = new BigNumber(wbnbEstimateAmount).times(
+        await getAllocPointForBTCB()
       )
-      const yfiRewardAmount = new BigNumber(wethEstimateAmount).times(
-        await getAllocPointForYFI()
+      const bifiRewardAmount = new BigNumber(wbnbEstimateAmount).times(
+        await getAllocPointForBIFI()
       )
 
-      setUserWethPendingReward(wethRewardAmount)
-      setUserWbtcPendingReward(
+      setUserWbnbPendingReward(wbnbRewardAmount)
+      setUserBtcbPendingReward(
         await getAmountOut(
-          wbtcETHPairContract,
-          wbtcRewardAmount.toNumber(),
+          btcbBNBPairContract,
+          btcbRewardAmount.toNumber(),
           false,
           8
         )
       )
-      setUserYfiPendingReward(
+      setUserBifiPendingReward(
         await getAmountOut(
-          yfiETHPairContract,
-          yfiRewardAmount.toNumber(),
+          bifiBNBPairContract,
+          bifiRewardAmount.toNumber(),
           false
         )
       )
     } else {
-      setUserWethPendingReward(new BigNumber(0))
-      setUserWbtcPendingReward(new BigNumber(0))
-      setUserYfiPendingReward(new BigNumber(0))
+      setUserWbnbPendingReward(new BigNumber(0))
+      setUserBtcbPendingReward(new BigNumber(0))
+      setUserBifiPendingReward(new BigNumber(0))
     }
 
     if (
       userSwapReward.available &&
       userSwapReward.available.isGreaterThan(new BigNumber(0))
     ) {
-      const wethEstimateAmount = await getAmountOut(userSwapReward.available)
-      const wethRewardAmount = wethEstimateAmount
-        .times(await getAllocPointForWETH())
+      const wbnbEstimateAmount = await getAmountOut(userSwapReward.available)
+      const wbnbRewardAmount = wbnbEstimateAmount
+        .times(await getAllocPointForWBNB())
         .div(1e18)
-      const wbtcRewardAmount = wethEstimateAmount
-        .times(await getAllocPointForWBTC())
+      const btcbRewardAmount = wbnbEstimateAmount
+        .times(await getAllocPointForBTCB())
         .div(1e18)
-      const yfiRewardAmount = wethEstimateAmount
-        .times(await getAllocPointForYFI())
+      const bifiRewardAmount = wbnbEstimateAmount
+        .times(await getAllocPointForBIFI())
         .div(1e18)
 
-      setUserWethAvailableReward(wethRewardAmount)
-      setUserWbtcAvailableReward(
-        await getAmountOut(wbtcETHPairContract, wbtcRewardAmount, false)
+      setUserWbnbAvailableReward(wbnbRewardAmount)
+      setUserBtcbAvailableReward(
+        await getAmountOut(btcbBNBPairContract, btcbRewardAmount, false)
       )
-      setUserYfiAvailableReward(
-        await getAmountOut(yfiETHPairContract, yfiRewardAmount, false)
+      setUserBifiAvailableReward(
+        await getAmountOut(bifiBNBPairContract, bifiRewardAmount, false)
       )
     } else {
-      setUserWethAvailableReward(new BigNumber(0))
-      setUserWbtcAvailableReward(new BigNumber(0))
-      setUserYfiAvailableReward(new BigNumber(0))
+      setUserWbnbAvailableReward(new BigNumber(0))
+      setUserBtcbAvailableReward(new BigNumber(0))
+      setUserBifiAvailableReward(new BigNumber(0))
     }
   }, [userSwapReward])
 
@@ -287,7 +287,7 @@ function Vault() {
 
     if (stakeAmount.lt(minDepositAmount)) {
       NotificationManager.warning(
-        `Minimum deposit amount is ${bnToDec(minDepositAmount).toFixed(1)} ETH`
+        `Minimum deposit amount is ${bnToDec(minDepositAmount).toFixed(1)} BNB`
       )
       return
     }
@@ -318,22 +318,22 @@ function Vault() {
       )
   }
 
-  const onClaimAvailableYzyReward = async (event) => {
+  const onClaimAvailable$888Reward = async (event) => {
     if (address == null || progress) return
 
-    const available = userYzyReward.available
+    const available = user$888Reward.available
 
     if (!available || available.lte(new BigNumber(0))) {
-      NotificationManager.warning(`There are no available YZY rewards.`)
+      NotificationManager.warning(`There are no available $888 rewards.`)
       return
     }
 
     setProgress(true)
 
     const encodedABI = vaultContract.contract.methods
-      .claimYzyAvailableReward()
+      .claim$888AvailableReward()
       .encodeABI()
-    transactionType = 'claimYzyAvailableReward'
+    transactionType = 'claim$888AvailableReward'
 
     if (isMobile)
       await mobileSendTransaction(
@@ -353,8 +353,8 @@ function Vault() {
       )
   }
 
-  const onShowConfirmModalForYZY = async () => {
-    const restTime = await getRestTimeForYzyRewards(address)
+  const onShowConfirmModalFor$888 = async () => {
+    const restTime = await getRestTimeFor$888Rewards(address)
     setShowConfirmModal(true)
     setModalTitle('Notes')
     setIsTreasury(true)
@@ -405,7 +405,7 @@ function Vault() {
   useEffect(async () => {
     if (isConfirmed === true) {
       if (isTreasury) {
-        await onClaimYzyReward()
+        await onClaim$888Reward()
       } else if (isUnstake) {
         await onUnstake()
         setIsUnstake(false)
@@ -416,21 +416,21 @@ function Vault() {
     }
   }, [isConfirmed])
 
-  const onClaimYzyReward = async (event) => {
-    const rewards = userYzyReward.pending.plus(userYzyReward.available)
+  const onClaim$888Reward = async (event) => {
+    const rewards = user$888Reward.pending.plus(user$888Reward.available)
     if (address == null || progress) return
 
     if (!rewards || rewards.lte(new BigNumber(0))) {
-      NotificationManager.warning(`There are no YZY rewards.`)
+      NotificationManager.warning(`There are no $888 rewards.`)
       return
     }
 
     setProgress(true)
 
     const encodedABI = vaultContract.contract.methods
-      .claimYzyReward()
+      .claim$888Reward()
       .encodeABI()
-    transactionType = 'claimYzyReward'
+    transactionType = 'claim$888Reward'
 
     if (isMobile)
       await mobileSendTransaction(
@@ -456,7 +456,7 @@ function Vault() {
     const available = userSwapReward.available
     if (!available || available.lte(new BigNumber(0))) {
       NotificationManager.warning(
-        `There are no available WETH/WBTC/YFI rewards.`
+        `There are no available WBNB/BTCB/BIFI rewards.`
       )
       return
     }
@@ -491,7 +491,7 @@ function Vault() {
     if (address == null || progress) return
 
     if (!rewards || rewards.lte(new BigNumber(0))) {
-      NotificationManager.warning(`There are no WETH/WBTC/YFI rewards.`)
+      NotificationManager.warning(`There are no WBNB/BTCB/BIFI rewards.`)
       return
     }
 
@@ -609,7 +609,7 @@ function Vault() {
             <Col xs={12} sm={4}>
               <Form title='888 PRICE'>
                 <span className='numberSpan'>
-                  ${new BigNumber(yzyPrice).toFormat(2)}
+                  ${new BigNumber($888Price).toFormat(2)}
                 </span>
               </Form>
             </Col>
@@ -644,7 +644,7 @@ function Vault() {
                         <BetCtrl
                           label='My BNB'
                           name='stakeAmount'
-                          balance={userETHBalance}
+                          balance={userBNBBalance}
                           currentVal={values.stakeAmount}
                           onChangeHandler={onChangeHandler}
                         />
@@ -702,12 +702,12 @@ function Vault() {
                         <Label
                           label='Pending 888'
                           balance={
-                            userYzyReward.pending
+                            user$888Reward.pending
                               ? bnDivdedByDecimals(
-                                  userYzyReward.pending
+                                  user$888Reward.pending
                                 ).toFormat(4) +
                                 ' ($' +
-                                bnDivdedByDecimals(pendingYZYValue).toFormat(
+                                bnDivdedByDecimals(pending$888Value).toFormat(
                                   2
                                 ) +
                                 ')'
@@ -719,12 +719,12 @@ function Vault() {
                         <Label
                           label='Available 888'
                           balance={
-                            userYzyReward.available
+                            user$888Reward.available
                               ? bnDivdedByDecimals(
-                                  userYzyReward.available
+                                  user$888Reward.available
                                 ).toFormat(4) +
                                 ' ($' +
-                                bnDivdedByDecimals(availableYZYValue).toFormat(
+                                bnDivdedByDecimals(available$888Value).toFormat(
                                   2
                                 ) +
                                 ')'
@@ -734,7 +734,7 @@ function Vault() {
                       </Col>
                       <Col xl={12}>
                         <Button
-                          onClickHandler={onClaimAvailableYzyReward}
+                          onClickHandler={onClaimAvailable$888Reward}
                           color='red'
                         >
                           Claim Available
@@ -742,7 +742,7 @@ function Vault() {
                       </Col>
                       <Col xl={12}>
                         <Button
-                          onClickHandler={onShowConfirmModalForYZY}
+                          onClickHandler={onShowConfirmModalFor$888}
                           color='white'
                         >
                           Claim Early
@@ -766,26 +766,26 @@ function Vault() {
                       <Col xs={6} md={6}>
                         <Label label='Pending' />
                         <Label
-                          label='WETH'
+                          label='WBNB'
                           balance={
-                            userWethPendingReward
-                              ? userWethPendingReward.toFixed(4)
+                            userWbnbPendingReward
+                              ? userWbnbPendingReward.toFixed(4)
                               : 0
                           }
                         />
                         <Label
-                          label='WBTC'
+                          label='BTCB'
                           balance={
-                            userWbtcPendingReward
-                              ? userWbtcPendingReward.toFixed(4)
+                            userBtcbPendingReward
+                              ? userBtcbPendingReward.toFixed(4)
                               : 0
                           }
                         />
                         <Label
-                          label='YFI'
+                          label='BIFI'
                           balance={
-                            userYfiPendingReward
-                              ? userYfiPendingReward.toFixed(4)
+                            userBifiPendingReward
+                              ? userBifiPendingReward.toFixed(4)
                               : 0
                           }
                         />
@@ -793,26 +793,26 @@ function Vault() {
                       <Col xs={6} md={6}>
                         <Label label='Available' />
                         <Label
-                          label='WETH'
+                          label='WBNB'
                           balance={
-                            userWethAvailableReward
-                              ? userWethAvailableReward.toFormat(4)
+                            userWbnbAvailableReward
+                              ? userWbnbAvailableReward.toFormat(4)
                               : 0
                           }
                         />
                         <Label
-                          label='WBTC'
+                          label='BTCB'
                           balance={
-                            userWbtcAvailableReward
-                              ? userWbtcAvailableReward.toFormat(4)
+                            userBtcbAvailableReward
+                              ? userBtcbAvailableReward.toFormat(4)
                               : 0
                           }
                         />
                         <Label
-                          label='YFI'
+                          label='BIFI'
                           balance={
-                            userYfiAvailableReward
-                              ? userYfiAvailableReward.toFormat(4)
+                            userBifiAvailableReward
+                              ? userBifiAvailableReward.toFormat(4)
                               : 0
                           }
                         />
@@ -853,7 +853,7 @@ function Vault() {
                     <br />
                     <span>
                       Please change your MetaMask to access the{' '}
-                      {networkId === '1' ? 'Main' : 'Ropsten'} Ethereum Network.
+                      {networkId === '56' ? 'Main' : 'Testnet'} Binance Smart Chain.
                     </span>
                   </Col>
                 </Row>

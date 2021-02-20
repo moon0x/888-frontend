@@ -1,12 +1,12 @@
 import BigNumber from 'bignumber.js';
-import { yzyETHPairContract, wethContract } from './contracts';
+import { $888BNBPairContract, wbnbContract } from './contracts';
 import { callMethod, bnToDec } from './utils';
-import { getYZYPrice, getETHPrice } from '../subgraphs/api';
+import { get$888Price, getBNBPrice } from '../subgraphs/api';
 
 // Getters
 export const getLPBalance = async (address) => {
   try {
-    const result = await callMethod(yzyETHPairContract.contract.methods['balanceOf'], [address]);
+    const result = await callMethod($888BNBPairContract.contract.methods['balanceOf'], [address]);
     return new BigNumber(result);
   } catch {
     return new BigNumber(0);
@@ -15,7 +15,7 @@ export const getLPBalance = async (address) => {
 
 export const getLPTotalSupply = async () => {
   try {
-    const result = await callMethod(yzyETHPairContract.contract.methods['totalSupply'], []);
+    const result = await callMethod($888BNBPairContract.contract.methods['totalSupply'], []);
     return new BigNumber(result);
   } catch (e) {
     // console.log('error :>> ', e.message);
@@ -25,14 +25,14 @@ export const getLPTotalSupply = async () => {
 
 export const getPairBalances = async () => {
   try {
-    const result = await callMethod(yzyETHPairContract.contract.methods['getReserves'], []);
-    const yzyBalance = new BigNumber(result._reserve0);
+    const result = await callMethod($888BNBPairContract.contract.methods['getReserves'], []);
+    const $888Balance = new BigNumber(result._reserve0);
     const ethBalance = new BigNumber(result._reserve1);
-    return {'yzy': yzyBalance, 'eth': ethBalance};
+    return {'$888': $888Balance, 'eth': ethBalance};
 
   } catch (e) {
     // console.log('error :>> ', e.message);
-    return {'yzy': new BigNumber(0), 'eth': new BigNumber(0)};
+    return {'$888': new BigNumber(0), 'eth': new BigNumber(0)};
   }
 }
 
@@ -43,7 +43,7 @@ export const getAmountOut = async (pairContractObj, amountIn, isEthOut, decimals
   let tokenBalance = 0;
   let ethBalance = 0;
 
-  if (token0.toLowerCase() === wethContract.address.toLowerCase()) {
+  if (token0.toLowerCase() === wbnbContract.address.toLowerCase()) {
     tokenBalance = bnToDec(new BigNumber(result._reserve1), decimals);
     ethBalance = bnToDec(new BigNumber(result._reserve0));
   } else {
@@ -59,12 +59,12 @@ export const getAmountOut = async (pairContractObj, amountIn, isEthOut, decimals
 
 export const getLPTVL = async () => {
   try {
-    const result = await callMethod(yzyETHPairContract.contract.methods['getReserves'], []);
-    const yzyBalance = bnToDec(new BigNumber(result._reserve0));
+    const result = await callMethod($888BNBPairContract.contract.methods['getReserves'], []);
+    const $888Balance = bnToDec(new BigNumber(result._reserve0));
     const ethBalance = bnToDec(new BigNumber(result._reserve1));
-    const yzyPrice = await getYZYPrice();
-    const ethPrice = await getETHPrice();
-    return yzyBalance * yzyPrice + ethBalance * ethPrice;
+    const $888Price = await get$888Price();
+    const ethPrice = await getBNBPrice();
+    return $888Balance * $888Price + ethBalance * ethPrice;
   } catch {
     return 0;
   }
