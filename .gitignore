@@ -32,3 +32,6 @@ package-lock.json
 /src/$888/abis/presaleContract-test.json
 /src/$888/abis/tokenContract-test.json
 /src/$888/abis/vaultContract-test.json
+
+# Local Netlify folder
+.netlify
