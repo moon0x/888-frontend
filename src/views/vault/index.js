@@ -691,7 +691,7 @@ function Vault() {
             <Col xs={12} md={4}>
               <Form
                 title='888 REWARDS'
-                text='888 Rewards are locked for 8 weeks and are 
+                text='888 Rewards are locked for 2 weeks and are 
                 claimable early for a 10% penalty that goes
                 to the DAO treasury'
               >
@@ -755,8 +755,8 @@ function Vault() {
             </Col>
             <Col xs={12} md={4}>
               <Form
-                title='BIFI/CAKE/WBNB REWARDS'
-                text='BIFI/CAKE/wBNB Rewards are locked for 90 
+                title='BIFI/BTCB/WBNB REWARDS'
+                text='BIFI/BTCB/wBNB Rewards are locked for 90 
                 days and are claimable early for a 20% fee 
                 which is used to market-buy and burn 888'
               >
