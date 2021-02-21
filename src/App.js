@@ -18,8 +18,8 @@ function App({ setAddressRequest, setNetworkIdRequest, setErrorRequest }) {
 
   const wallet = useWallet();
 
-  console.log('App: wallet >>> ', wallet);
-  console.log('App: bsc >>> ', bsc);
+  // console.log('App: wallet >>> ', wallet);
+  // console.log('App: bsc >>> ', bsc);
 
   if (isMobile) {
     if (wallet.status === 'connected') {
@@ -32,9 +32,9 @@ function App({ setAddressRequest, setNetworkIdRequest, setErrorRequest }) {
     if (typeof wallet.ethereum !== 'undefined') {
       window.web3 = new Web3(wallet.ethereum);
       
-      console.log('window.ethereum >>>', window.ethereum);
-      console.log('wallet.ethereum >>>', wallet.ethereum);
-      console.log('window.web3', window.web3);
+      // console.log('window.ethereum >>>', window.ethereum);
+      // console.log('wallet.ethereum >>>', wallet.ethereum);
+      // console.log('window.web3', window.web3);
 
       window.web3.eth.net.getId((err, netId) => {
         handleNetworkChanged(`${netId}`);

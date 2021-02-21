@@ -15,23 +15,25 @@ import { bnToDec, callMethod } from '../$888/utils';
 // `;
 
 const get$888Price = async () => {
+    // token0 -> wbnb & token1 -> busd
     const result1 = await callMethod(busdBNBPairContract.contract.methods['getReserves'], []);
+    // token0 -> 888 & token1 -> wbnb
     const result2 = await callMethod($888BNBPairContract.contract.methods['getReserves'], []);
-    const $888Balance = bnToDec(new BigNumber(result2._reserve0));
-    const ethBalanceFor$888 = bnToDec(new BigNumber(result2._reserve1));
-    const busdBalance = bnToDec(new BigNumber(result1._reserve0), 6);
-    const ethBalanceForBusd = bnToDec(new BigNumber(result1._reserve1));
 
-    const price = busdBalance / ethBalanceForBusd * ethBalanceFor$888 / $888Balance;
+    const wbnbBalanceForBusd = bnToDec(new BigNumber(result1._reserve0));
+    const busdBalance = bnToDec(new BigNumber(result1._reserve1));
+    const $888Balance = bnToDec(new BigNumber(result2._reserve0));
+    const wbnbBalanceFor$888 = bnToDec(new BigNumber(result2._reserve1));
+    const price = busdBalance / wbnbBalanceForBusd * wbnbBalanceFor$888 / $888Balance;
     return price;
 };
 
 const getBNBPrice = async () => {
+    // token0 -> wbnb & token1 -> busd
     const result1 = await callMethod(busdBNBPairContract.contract.methods['getReserves'], []);
-    const busdBalance = bnToDec(new BigNumber(result1._reserve0), 6);
-    const ethBalance = bnToDec(new BigNumber(result1._reserve1));
-    const price = busdBalance / ethBalance;
-
+    const wbnbBalance = bnToDec(new BigNumber(result1._reserve0));
+    const busdBalance = bnToDec(new BigNumber(result1._reserve1));
+    const price = busdBalance / wbnbBalance;
     return price;
 };
 
