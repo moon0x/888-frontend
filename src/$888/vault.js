@@ -165,7 +165,7 @@ export const getLotteryFee = async () => {
 
 export const getLotteryLimit = async () => {
     const limit = new BigNumber(await callMethod(vaultContract.contract.methods['_lotteryLimit'], []));
-    return new BigNumber(limit).div(new BigNumber(10).pow(6)).toString(10);
+    return new BigNumber(limit).div(new BigNumber(10).pow(18)).toString(10);
 }
 
 export const getLotteryTotalPaidOut = async () => {

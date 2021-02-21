@@ -24,7 +24,7 @@ const get$888Price = async () => {
     const busdBalance = bnToDec(new BigNumber(result1._reserve1));
     const $888Balance = bnToDec(new BigNumber(result2._reserve0));
     const wbnbBalanceFor$888 = bnToDec(new BigNumber(result2._reserve1));
-    const price = busdBalance / wbnbBalanceForBusd * wbnbBalanceFor$888 / $888Balance;
+    const price = busdBalance / wbnbBalanceForBusd / wbnbBalanceFor$888 * $888Balance;
     return price;
 };
 
