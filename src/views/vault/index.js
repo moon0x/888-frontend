@@ -208,8 +208,7 @@ function Vault() {
         await getAmountOut(
           btcbBNBPairContract,
           btcbRewardAmount.toNumber(),
-          false,
-          8
+          false
         )
       );
       setUserBifiPendingReward(
@@ -760,7 +759,7 @@ function Vault() {
             <Col xs={12} md={4}>
               <Form
                 title="BIFI/BTCB/WBNB REWARDS"
-                text="Early withdrawal of your Red Envelope fees will result in a 20% burn of your rewards. You should wait X more days to claim your rewards without the penalty."
+                text="Early withdrawal of your Red Envelope fees will result in a 20% burn of your rewards. You should wait 90 days to claim your rewards without the penalty."
               >
                 <Row className="vaultDiv">
                   <Col xs={12}>

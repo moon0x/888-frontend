@@ -96,7 +96,7 @@ function Lottery() {
                 <span className='textSpan'>
                   We take {lotteryFee}% from the collected taxfees and put it
                   inside this lottery pool, each time the pool reaches a value
-                  of {lotteryLimit} USD a random LP staker gets selected as the
+                  of ${lotteryLimit} USD, a random LP staker gets selected as the
                   winner. Winner takes all!
                 </span>
               </Form>

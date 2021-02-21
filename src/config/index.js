@@ -44,7 +44,7 @@ const config = {
       97: '0xB5526B53050282474B3dEB5Aca92519bB7A60A33',
     },
     bifiBNBPair: {
-      56: '',
+      56: '0xd132d2c24f29ee8abb64a66559d1b7aa627bd7fd',
       97: '0xB5526B53050282474B3dEB5Aca92519bB7A60A33',
     },
     busdBNBPair: {
