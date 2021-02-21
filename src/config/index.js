@@ -12,11 +12,11 @@ const config = {
   networkId: '56', //   process.env.REACT_APP_NETWORK_ID
   contractAddress: {
     $888: {
-      56: '0x1829CbA3DbE1468c1b37459a0EF3aF3218798f65',
+      56: '0xE4EcE58d1b9d623D72226b487BFfcC019284E1c7',
       97: '0xB5526B53050282474B3dEB5Aca92519bB7A60A33',
     },
     vault: {
-      56: '0x3C27385710A2a579C6aF2d39B15533EDF9A6a2cF',
+      56: '0x2eB235283060de10aF7145a8393C128a6d52E1C4',
       97: '0x6bC9271B45926317B4c07D0fFE1631dd811C16f3',
     },
     wbnb: {
@@ -36,7 +36,7 @@ const config = {
       97: '0xB5526B53050282474B3dEB5Aca92519bB7A60A33',
     },
     $888BNBPair: {
-      56: '0x42366997757fa22f70d3526d91b44a3a1efb0846',
+      56: '0xdfa6b6857bfef1ec50318fa6870c0fdf9b233c49',
       97: '0xB5526B53050282474B3dEB5Aca92519bB7A60A33',
     },
     btcbBNBPair: {
