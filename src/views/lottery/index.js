@@ -139,7 +139,7 @@ function Lottery() {
                       </Col>
                     </Row>
                     {winnersInfo?.map((element, index) => (
-                      <Row className=''>
+                      <Row key={index}>
                         <Col xl={12}>{element.address}</Col>
                       </Row>
                     ))}
@@ -151,7 +151,7 @@ function Lottery() {
                       </Col>
                     </Row>
                     {winnersInfo?.map((element, index) => (
-                      <Row>
+                      <Row key={index}>
                         <Col xl={12}>{element.timestamp}</Col>
                       </Row>
                     ))}
@@ -163,7 +163,7 @@ function Lottery() {
                       </Col>
                     </Row>
                     {winnersInfo?.map((element, index) => (
-                      <Row>
+                      <Row key={index}>
                         <Col xl={12}>
                           {bnToDec(element.amount).toFixed(4)} $888 ($
                           {bnToDec(

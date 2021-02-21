@@ -11,11 +11,11 @@ import { useWallet } from 'use-wallet'
 
 function Header() {
   const wallet = useWallet()
-  console.log('wallet >>>', wallet);
+  // console.log('wallet >>>', wallet);
 
   const dispatch = useDispatch()
   const address = useSelector((state) => state.authUser.address)
-  console.log(address)
+  // console.log(address)
   // const networkId = useSelector(state => state.authUser.networkId);
 
   const onConnectClick = async () => {
@@ -29,10 +29,10 @@ function Header() {
       return
     }
 
-    console.log(wallet.account);
-    console.log(wallet.chainId);
-    console.log(wallet.ethereum);
-    console.log(wallet.status);
+    // console.log(wallet.account);
+    // console.log(wallet.chainId);
+    // console.log(wallet.ethereum);
+    // console.log(wallet.status);
   }
 
   return (

@@ -11,36 +11,36 @@ import btcbContractAbi from './abis/btcbContract.json';
 import bifiContractAbi from './abis/bifiContract.json';
 
 const networkId = config.networkId;
-console.log('networkId >>> ', networkId);
+// console.log('networkId >>> ', networkId);
 
 const $888ContractAddress = config.contractAddress.$888[networkId];
 const I$888Contract = new web3.eth.Contract($888ContractAbi, $888ContractAddress);
-console.log('$888ContractAddress >>>', $888ContractAddress);
-console.log('I$888Contract >>> ', I$888Contract);
+// console.log('$888ContractAddress >>>', $888ContractAddress);
+// console.log('I$888Contract >>> ', I$888Contract);
 
 const vaultContractAddress = config.contractAddress.vault[networkId];
 const IVaultContract = new web3.eth.Contract(
   vaultContractAbi,
   vaultContractAddress
 );
-console.log('vaultContractAddress >>>', vaultContractAddress);
-console.log('IVaultContract >>>', IVaultContract);
+// console.log('vaultContractAddress >>>', vaultContractAddress);
+// console.log('IVaultContract >>>', IVaultContract);
 
 const $888BNBPairContractAddress = config.contractAddress.$888BNBPair[networkId];
 const I$888BNBPairContract = new web3.eth.Contract(
   pancakeV2PairContractAbi,
   $888BNBPairContractAddress
 );
-console.log('888BNBPairContractAddress >>>', $888BNBPairContractAddress);
-console.log('I$888BNBPairContract >>>', I$888BNBPairContract);
+// console.log('888BNBPairContractAddress >>>', $888BNBPairContractAddress);
+// console.log('I$888BNBPairContract >>>', I$888BNBPairContract);
 
 const bifiBNBPairContractAddress = config.contractAddress.bifiBNBPair[networkId];
 const IbifiBNBPairContract = new web3.eth.Contract(
   pancakeV2PairContractAbi,
   bifiBNBPairContractAddress
 );
-console.log('bifiBNBPairContractAddress >>>', bifiBNBPairContractAddress);
-console.log('IbifiBNBPairContract >>>', IbifiBNBPairContract);
+// console.log('bifiBNBPairContractAddress >>>', bifiBNBPairContractAddress);
+// console.log('IbifiBNBPairContract >>>', IbifiBNBPairContract);
 
 const btcbBNBPairContractAddress =
   config.contractAddress.btcbBNBPair[networkId];
@@ -48,29 +48,29 @@ const IbtcbBNBPairContract = new web3.eth.Contract(
   pancakeV2PairContractAbi,
   btcbBNBPairContractAddress
 );
-console.log('btcbBNBPairContractAddress >>>', btcbBNBPairContractAddress);
-console.log('IbtcbBNBPairContract >>>', IbtcbBNBPairContract);
+// console.log('btcbBNBPairContractAddress >>>', btcbBNBPairContractAddress);
+// console.log('IbtcbBNBPairContract >>>', IbtcbBNBPairContract);
 
 const wbnbContractAddress = config.contractAddress.wbnb[networkId];
 const IWbnbContract = new web3.eth.Contract(
   wbnbContractAbi,
   wbnbContractAddress
 );
-console.log('wbnbContractAddress >>>', wbnbContractAddress);
-console.log('IWbnbContract >>>', IWbnbContract);
+// console.log('wbnbContractAddress >>>', wbnbContractAddress);
+// console.log('IWbnbContract >>>', IWbnbContract);
 
 const btcbContractAddress = config.contractAddress.btcb[networkId];
 const IbtcbContract = new web3.eth.Contract(
   btcbContractAbi,
   btcbContractAddress
 );
-console.log('btcbContractAddress >>>', btcbContractAddress);
-console.log('IbtcbContract >>>', IbtcbContract);
+// console.log('btcbContractAddress >>>', btcbContractAddress);
+// console.log('IbtcbContract >>>', IbtcbContract);
 
 const bifiContractAddress = config.contractAddress.bifi[networkId];
 const IbifiContract = new web3.eth.Contract(bifiContractAbi, bifiContractAddress);
-console.log('bifiContractAddress >>>', bifiContractAddress);
-console.log('IbifiContract >>>', IbifiContract);
+// console.log('bifiContractAddress >>>', bifiContractAddress);
+// console.log('IbifiContract >>>', IbifiContract);
 
 const busdBNBPairContractAddress =
   config.contractAddress.busdBNBPair[networkId];
@@ -78,8 +78,8 @@ const IbusdBNBPairContract = new web3.eth.Contract(
   pancakeV2PairContractAbi,
   busdBNBPairContractAddress
 );
-console.log('busdBNBPairContractAddress >>>', busdBNBPairContractAddress);
-console.log('IbusdBNBPairContract >>>', IbusdBNBPairContract);
+// console.log('busdBNBPairContractAddress >>>', busdBNBPairContractAddress);
+// console.log('IbusdBNBPairContract >>>', IbusdBNBPairContract);
 
 const $888Contract = {
   address: $888ContractAddress,
