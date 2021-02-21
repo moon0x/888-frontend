@@ -131,7 +131,10 @@ function Lottery() {
           <Row>
             <Col xs={12} md={12}>
               <Form title=''>
-                <Row>
+                <Row style={{
+                  overflowY: 'auto',
+                  height: '400px',
+                }}>
                   <Col xs={4} md={4}>
                     <Row className='winner-title'>
                       <Col xl={12}>
