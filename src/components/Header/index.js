@@ -67,7 +67,7 @@ function Header() {
           </Nav.Link>
           <Nav.Link
             className='menu-item'
-            href='https://$888dao.medium.com/introducing-$888-dao-$888-6c973279dad5'
+            href='https://888dao-finance.medium.com/888-dao-bsc-yield-farming-that-earns-you-red-envelope-rewards-wbnb-btcb-and-bifi-94d0d83a544f'
             activestyle={{ color: '#EE2529' }}
             target='_blank'
             rel='noreferrer'

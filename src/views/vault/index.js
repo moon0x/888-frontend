@@ -707,7 +707,7 @@ function Vault() {
             <Col xs={12} md={4}>
               <Form
                 title="888 REWARDS"
-                text="888 Rewards are vested for 8 weeks and are claimable early for a 10% penalty that goes to the DAO treasury"
+                text="888 Rewards are vested for 2 weeks and are claimable early for a 10% penalty that goes to the DAO treasury"
               >
                 <Row className="vaultDiv">
                   <Col xl={12}>

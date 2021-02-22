@@ -13,22 +13,24 @@ function Footer() {
     <div className='footer'>
       <ul>
         <li>
-          <img src={twitter} alt='Twitter'></img>
+          <a href="https://twitter.com/888daofinance" rel="noreferrer" target="_blank" >
+            <img src={twitter} alt='Twitter' />
+          </a>
         </li>
         <li>
-          <img src={discord} alt='Discord'></img>
+          <a href="https://t.me/dao888finance" rel="noreferrer" target="_blank" >
+            <img src={telegram} alt='Telegram' />
+          </a>
         </li>
         <li>
-          <img src={telegram} alt='Telegram'></img>
+          <a href="https://github.com/888daofinance" rel="noreferrer" target="_blank" >
+            <img src={github} alt='Github' />
+          </a>
         </li>
         <li>
-          <img src={github} alt=''></img>
-        </li>
-        <li>
-          <img src={bunny} alt=''></img>
-        </li>
-        <li>
-          <img src={dextools} alt='Dextools'></img>
+          <a href="https://exchange.pancakeswap.finance/#/swap?outputCurrency=0xBFb2857474A48b345dD1c2F67ba57C28caa630fA" rel="noreferrer" target="_blank" >
+            <img src={bunny} alt='pancakeswap' />
+          </a>
         </li>
       </ul>
     </div>

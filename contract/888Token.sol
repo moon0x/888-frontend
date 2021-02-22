@@ -350,6 +350,7 @@ contract Dao222Token is Context, IERC20, Ownable {
     }
 
     function setTaxFee(uint16 fee) external onlyOwner {
+        require(fee <= 1000, "fee should be less than 10%");
         _taxFee = fee;
         emit ChangedTaxFee(_msgSender(), fee);
     }

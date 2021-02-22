@@ -45,7 +45,12 @@ const get$888Price = async () => {
 
     if(bnbReserve1 <= 0 || dao888Reserve <= 0) return;
 
-    const price = busdReserve / bnbReserve1 * bnbReserve2 / dao888Reserve;
+    console.log('busdReserve :>> ', busdReserve);
+    console.log('bnbReserve1 :>> ', bnbReserve1);
+    console.log('bnbReserve2 :>> ', bnbReserve2);
+    console.log('dao888Reserve :>> ', dao888Reserve);
+    
+    const price = busdReserve * bnbReserve2 / bnbReserve1 / dao888Reserve;
     return price;
 };
 
