@@ -358,31 +358,43 @@ function Vault() {
 
   const onShowConfirmModalFor$888 = async () => {
     const restTime = await getRestTimeFor$888Rewards(address);
+    if (restTime === '0 seconds') {
+      NotificationManager.warning(
+        `There are no available $888 DAO rewards.`
+      );
+      return;
+    }
     setShowConfirmModal(true);
     setModalTitle("Notes");
     setIsTreasury(true);
     setIsUnstake(false);
     setModalContent(
-      "Early withdraw will burn " +
+      "Early withdrawal of your rewards will result in a " +
         burnFee +
-        "% of rewards. Approximately, you should wait for " +
+        "% burn of your rewards. You should wait " +
         restTime +
-        " in order to get rewards without fee."
+        "  more days to claim your rewards without the penalty. Do you want to continue?"
     );
   };
 
   const onShowConfirmModalForQuarterly = async () => {
     const restTime = await getRestTimeForSwapRewards(address);
+    if (restTime === '0 seconds') {
+      NotificationManager.warning(
+        `There are no available WBNB/BIFI/BTCB rewards.`
+      );
+      return;
+    }
     setShowConfirmModal(true);
     setModalTitle("Notes");
     setIsTreasury(false);
     setIsUnstake(false);
     setModalContent(
-      "Early withdraw will burn " +
+      "Early withdrawal of your Red Envelope rewards will result in a " +
         burnFee +
-        "% of rewards. Approximately, you should wait for " +
+        "% burn of your rewards. You should wait " +
         restTime +
-        " in order to get rewards without fee."
+        " more days to claim your rewards without the penalty. Do you want to continue?"
     );
   };
 
@@ -400,6 +412,9 @@ function Vault() {
             burnFee +
             "% of pending rewards will be burned."
         );
+      } else {
+        await onUnstake();
+        setIsUnstake(false);
       }
     }
     setIsUnstake(true);
@@ -431,7 +446,7 @@ function Vault() {
     setProgress(true);
 
     const encodedABI = vaultContract.contract.methods
-      .claim$888Reward()
+      .claim888Reward()
       .encodeABI();
     transactionType = "claim$888Reward";
 
@@ -639,7 +654,7 @@ function Vault() {
                   "%)"
                 }
                 text={
-                  "Deposit BNB to earn staking rewards in 888, BIFI, BTCB and wBNB"
+                  "Deposit BNB to earn staking rewards in 888, BIFI, BTCB and wBNB. Staked LPs are locked for 90 days and there is a 10% unstaking fee which goes to the Treasury. Lock time and unstake fee can be changed via voting"
                 }
               >
                 <Row className="vaultDiv">
@@ -696,7 +711,7 @@ function Vault() {
             <Col xs={12} md={4}>
               <Form
                 title="888 REWARDS"
-                text="To create stable liquidity during the bootstrap phase, staked LPs are locked for 2 weeks. If you want to unstake early, 10% of the LP token will be sent to the DAO treasury and 20% of pending rewards will be burned"
+                text="888 Rewards are vested for 8 weeks and are claimable early for a 10% penalty that goes to the DAO treasury"
               >
                 <Row className="vaultDiv">
                   <Col xl={12}>
@@ -758,8 +773,8 @@ function Vault() {
             </Col>
             <Col xs={12} md={4}>
               <Form
-                title="BIFI/BTCB/WBNB REWARDS"
-                text="Early withdrawal of your Red Envelope fees will result in a 20% burn of your rewards. You should wait 90 days to claim your rewards without the penalty."
+                title="RED ENVELOPE REWARDS"
+                text="Red Envelope (BIFI/BTCB/wBNB) rewards are vested for 90 days and are claimable early for a 20% fee which is used to market-buy and burn 888"
               >
                 <Row className="vaultDiv">
                   <Col xs={12}>
