@@ -1,7 +1,7 @@
 import BigNumber from 'bignumber.js';
 // import { gql } from '@apollo/client';
 // import client from './apollo';
-import { $888BNBPairContract, busdBNBPairContract } from '../$888/contracts';
+import { $888BNBPairContract, busdBNBPairContract, wbnbContract } from '../$888/contracts';
 import { getCirculatingSupply } from '../$888/token';
 import { bnToDec, callMethod } from '../$888/utils';
 
@@ -15,25 +15,59 @@ import { bnToDec, callMethod } from '../$888/utils';
 // `;
 
 const get$888Price = async () => {
-    // token0 -> wbnb & token1 -> busd
-    const result1 = await callMethod(busdBNBPairContract.contract.methods['getReserves'], []);
-    // token0 -> 888 & token1 -> wbnb
-    const result2 = await callMethod($888BNBPairContract.contract.methods['getReserves'], []);
+    let busdReserve = 0;
+    let bnbReserve1 = 0;
+    let dao888Reserve = 0;
+    let bnbReserve2 = 0;
+    let token0;
 
-    const wbnbBalanceForBusd = bnToDec(new BigNumber(result1._reserve0));
-    const busdBalance = bnToDec(new BigNumber(result1._reserve1));
-    const $888Balance = bnToDec(new BigNumber(result2._reserve0));
-    const wbnbBalanceFor$888 = bnToDec(new BigNumber(result2._reserve1));
-    const price = busdBalance / wbnbBalanceForBusd / wbnbBalanceFor$888 * $888Balance;
+    token0 = await callMethod(busdBNBPairContract.contract.methods['token0'], []);
+    if(token0 === wbnbContract.address) {
+        let result = await callMethod(busdBNBPairContract.contract.methods['getReserves'], []);
+        bnbReserve1 = bnToDec(new BigNumber(result._reserve0));
+        busdReserve = bnToDec(new BigNumber(result._reserve1));
+    } else {
+        let result = await callMethod(busdBNBPairContract.contract.methods['getReserves'], []);
+        busdReserve = bnToDec(new BigNumber(result._reserve0));
+        bnbReserve1 = bnToDec(new BigNumber(result._reserve1));
+    }
+
+    token0 = await callMethod($888BNBPairContract.contract.methods['token0'], []);
+    if(token0 === wbnbContract.address) {
+        let result = await callMethod($888BNBPairContract.contract.methods['getReserves'], []);
+        bnbReserve2 = bnToDec(new BigNumber(result._reserve0));
+        dao888Reserve = bnToDec(new BigNumber(result._reserve1));
+    } else {
+        let result = await callMethod($888BNBPairContract.contract.methods['getReserves'], []);
+        dao888Reserve = bnToDec(new BigNumber(result._reserve0));
+        bnbReserve2 = bnToDec(new BigNumber(result._reserve1));
+    }
+
+    if(bnbReserve1 <= 0 || dao888Reserve <= 0) return;
+
+    const price = busdReserve / bnbReserve1 * bnbReserve2 / dao888Reserve;
     return price;
 };
 
 const getBNBPrice = async () => {
-    // token0 -> wbnb & token1 -> busd
-    const result1 = await callMethod(busdBNBPairContract.contract.methods['getReserves'], []);
-    const wbnbBalance = bnToDec(new BigNumber(result1._reserve0));
-    const busdBalance = bnToDec(new BigNumber(result1._reserve1));
-    const price = busdBalance / wbnbBalance;
+    let busdReserve = 0;
+    let bnbReserve1 = 0;
+    let token0;
+
+    token0 = await callMethod(busdBNBPairContract.contract.methods['token0'], []);
+    if(token0 === wbnbContract.address) {
+        let result = await callMethod(busdBNBPairContract.contract.methods['getReserves'], []);
+        bnbReserve1 = bnToDec(new BigNumber(result._reserve0));
+        busdReserve = bnToDec(new BigNumber(result._reserve1));
+    } else {
+        let result = await callMethod(busdBNBPairContract.contract.methods['getReserves'], []);
+        busdReserve = bnToDec(new BigNumber(result._reserve0));
+        bnbReserve1 = bnToDec(new BigNumber(result._reserve1));
+    }
+
+    if(bnbReserve1 <= 0 || busdReserve <= 0) return;
+
+    const price = busdReserve / bnbReserve1;
     return price;
 };
 
