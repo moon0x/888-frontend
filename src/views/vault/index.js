@@ -648,11 +648,7 @@ function Vault() {
           <Row>
             <Col xs={12} md={4} style={{ lineHeight: "1.3" }}>
               <Form
-                title={
-                  "1-CLICK STAKING (APY: " +
-                  new BigNumber(apy).dp(2, 0).toString(10) +
-                  "%)"
-                }
+                title={`1-CLICK STAKING (APY: ${new BigNumber(apy).dp(2, 0).toString(10).replace(/\B(?=(\d{3})+(?!\d))/g, ",")} %)`}
                 text={
                   "Deposit BNB to earn staking rewards in 888, BIFI, BTCB and wBNB. Staked LPs are locked for 90 days and there is a 10% unstaking fee which goes to the Treasury. Lock time and unstake fee can be changed via voting"
                 }

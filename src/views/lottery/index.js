@@ -93,7 +93,7 @@ function Lottery() {
           <Row>
             <Col xs={12} sm={12}>
               <Form title="How it works">
-                <span className="textSpan">
+              <span className='textSpan' style={{textTransform: 'none'}}>
                   {lotteryFee}% of the collected tax from staking rewards is
                   added to the lottery pool. Each time the lottery pool reaches
                   a value of ${lotteryLimit} USD, a random LP staker gets
