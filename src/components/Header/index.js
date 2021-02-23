@@ -74,6 +74,15 @@ function Header() {
           >
             ABOUT
           </Nav.Link>
+          <Nav.Link
+            className='menu-item'
+            href='/888Dao_Audit.pdf'
+            activestyle={{ color: '#EE2529' }}
+            target='_blank'
+            rel='noreferrer'
+          >
+            AUDIT
+          </Nav.Link>
         </Nav>
         <Nav>
           <Nav.Link href='#'>
