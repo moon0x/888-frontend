@@ -52,7 +52,7 @@ interface IERC20 {
     );
 }
 
-interface I222Vault {
+interface I888Vault {
     function balanceOf(address account) external view returns (uint256);
 
     function addTaxFee(uint256 amount) external returns (bool);
@@ -161,16 +161,16 @@ library SafeMath {
 }
 
 /**
- * '222' token contract
+ * '888' token contract
  *
- * Name        : 222 DAO
- * Symbol      : 222
+ * Name        : 888 DAO
+ * Symbol      : 888
  * Total supply: 8888
  * Decimals    : 18
  *
  * BEP20 Token, with the Burnable, Pausable and Ownable from OpenZeppelin
  */
-contract Dao222Token is Context, IERC20, Ownable {
+contract Dao888Token is Context, IERC20, Ownable {
     using SafeMath for uint256;
 
     mapping(address => uint256) private _balances;
@@ -210,8 +210,8 @@ contract Dao222Token is Context, IERC20, Ownable {
         address presaleTokenOwner,
         address vaultTokenOwner
     ) {
-        _name = "222 DAO";
-        _symbol = "222";
+        _name = "888 DAO";
+        _symbol = "888";
         _decimals = 18;
 
         _uniswapTokenOwner = uniswapTokenOwner;
@@ -267,7 +267,7 @@ contract Dao222Token is Context, IERC20, Ownable {
             _transfer(_msgSender(), _vault, taxAmount);
             _transfer(_msgSender(), recipient, leftAmount);
 
-            I222Vault(_vault).addTaxFee(taxAmount);
+            I888Vault(_vault).addTaxFee(taxAmount);
         }
 
         return true;
@@ -306,7 +306,7 @@ contract Dao222Token is Context, IERC20, Ownable {
 
             _transfer(sender, _vault, feeAmount);
             _transfer(sender, recipient, leftAmount);
-            I222Vault(_vault).addTaxFee(feeAmount);
+            I888Vault(_vault).addTaxFee(feeAmount);
         }
         _approve(
             sender,
@@ -402,7 +402,7 @@ contract Dao222Token is Context, IERC20, Ownable {
                 if (_initialMaxTransfers != 0) {
                     require(
                         amount <= _initialMaxTransferAmount,
-                        "Can't transfer more than 2 222 for initial 50 times."
+                        "Can't transfer more than 2 888 for initial 50 times."
                     );
                     _initialMaxTransfers--;
                 }
